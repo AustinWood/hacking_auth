@@ -11,6 +11,7 @@
 #
 
 class User < ActiveRecord::Base
+  #new test comment ryley
   #test comment
   # Second test comment
   # third test comment gilbert
