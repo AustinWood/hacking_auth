@@ -15,4 +15,12 @@ class Question < ActiveRecord::Base
   # TODO Did I set up parent/children associations correctly?
   belongs_to :parent, class_name: :Question
   has_many :children, class_name: :Question, foreign_key: :parent_id
+
+  def root_question
+    question = self
+    until self.parent_id.nil?
+      question = question.parent
+    end
+    question
+  end
 end
