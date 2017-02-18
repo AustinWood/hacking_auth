@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   after_initialize :ensure_session_token
 
   has_many :attempts
-  has_many :exams
+  has_many :exams, class_name: :Exam, foreign_key: :root_question_id
 
   ######## AUTH STUFF BELOW ########
 
