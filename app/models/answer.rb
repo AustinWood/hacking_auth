@@ -13,4 +13,6 @@
 
 class Answer < ActiveRecord::Base
   validates :question_id, :attempt_id, :is_open, :did_open, presence: true
+  belongs_to :question
+  belongs_to :attempt
 end
