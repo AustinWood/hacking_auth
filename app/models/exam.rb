@@ -15,7 +15,5 @@ class Exam < ActiveRecord::Base
   validates :owner_id, :title, :root_question_id, presence: true
 
   belongs_to :owner, class_name: :User
-
-  belongs_to :root_question,
-    class_name: :Question
+  belongs_to :root_question, class_name: :Question
 end

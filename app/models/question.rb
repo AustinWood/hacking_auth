@@ -14,5 +14,5 @@ class Question < ActiveRecord::Base
   has_many :answers
   # TODO Did I set up parent/children associations correctly?
   belongs_to :parent, class_name: :Question
-  has_many :children, class_name: :Question
+  has_many :children, class_name: :Question, foreign_key: :parent_id
 end

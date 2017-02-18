@@ -14,12 +14,13 @@ class User < ActiveRecord::Base
   validates :username, :password_digest, :session_token, presence: true
   # TODO: Change minimum password length back to 6 before deployment
   validates :password, length: { minimum: 2, allow_nil: true }
+
   attr_reader :password
 
   after_initialize :ensure_session_token
 
   has_many :attempts
-  has_many :exams, class_name: :Exam, foreign_key: :root_question_id
+  has_many :exams, class_name: :Exam, foreign_key: :owner_id
 
   ######## AUTH STUFF BELOW ########
 
