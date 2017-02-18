@@ -11,6 +11,7 @@
 #
 
 class User < ActiveRecord::Base
+  #new test comment ryley
   #test comment
   validates :username, :password_digest, :session_token, presence: true
   # TODO: Change minimum password length back to 6 before deployment
