@@ -11,7 +11,6 @@
 #
 
 class User < ActiveRecord::Base
-  # gil test
   validates :username, :password_digest, :session_token, presence: true
   # TODO: Change minimum password length back to 6 before deployment
   validates :password, length: { minimum: 2, allow_nil: true }
