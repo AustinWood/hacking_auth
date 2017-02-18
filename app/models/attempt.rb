@@ -10,4 +10,5 @@
 #
 
 class Attempt < ActiveRecord::Base
+  validates :user_id
 end

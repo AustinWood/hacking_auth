@@ -12,4 +12,5 @@
 #
 
 class Answer < ActiveRecord::Base
+  validates :question_id, :attempt_id, :is_open, :did_open, presence: true
 end
