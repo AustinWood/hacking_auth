@@ -1,13 +1,13 @@
 # == Schema Information
 #
-# Table name: attempts
+# Table name: questions
 #
 #  id         :integer          not null, primary key
-#  user_id    :integer
-#  stop_time  :string
+#  parent_id  :integer
+#  text       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 
-class Attempt < ActiveRecord::Base
+class Question < ActiveRecord::Base
 end
