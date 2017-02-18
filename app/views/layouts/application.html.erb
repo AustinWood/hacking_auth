@@ -8,6 +8,8 @@
 </head>
 <body>
 
+  <%= "#{current_user.name} is logged in" if current_user %>
+
 <%= yield %>
 
 </body>
