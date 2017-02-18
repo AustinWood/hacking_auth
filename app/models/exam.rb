@@ -12,4 +12,5 @@
 #
 
 class Exam < ActiveRecord::Base
+  validates :owner_id, :title, :root_question_id, presence: true
 end
