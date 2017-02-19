@@ -18,9 +18,19 @@ class Question < ActiveRecord::Base
 
   def root_question
     question = self
-    until self.parent_id.nil?
+    until question.parent_id.nil?
       question = question.parent
     end
     question
+  end
+
+  def indentation
+    i = 0
+    question = self
+    until question.parent_id.nil?
+      question = question.parent
+      i += 1
+    end
+    i
   end
 end

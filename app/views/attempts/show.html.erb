@@ -5,6 +5,8 @@
 <ul>
   <% answers.each do |answer| %>
     <% question = Question.find(answer.question_id) %>
-    <li><%= question.text %></li>
+    <% margin = question.indentation * 24 %>
+    <% puts margin %>
+    <li align="left" style="text-align: left; margin-left: <%= margin %>px;"><%= question.text.html_safe %></li>
   <% end %>
 </ul>
