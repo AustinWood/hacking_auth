@@ -1,12 +1,19 @@
 <h1>Attempts > Show</h1>
 
-<% answers = Attempt.last.answers %>
+<% questions = Exam.first.questions %>
 
-<ul>
-  <% answers.each do |answer| %>
-    <% question = Question.find(answer.question_id) %>
+<ul style="list-style-type:none">
+  <% questions.each do |question| %>
+    <% next unless question.parent.nil? || question.parent.is_open? %>
     <% margin = question.indentation * 24 %>
-    <% puts margin %>
-    <li align="left" style="text-align: left; margin-left: <%= margin %>px;"><%= question.text.html_safe %></li>
+    <% answer = Answer.find_by(question_id: question.id, attempt_id: 1) %>
+    <li align="left" style="text-align: left; margin-left: <%= margin %>px;">
+      <form action="attempt_url" method="post">
+        <input type="hidden" name="_method" value="patch">
+        <input type="hidden" name="attempt[answer_id]" value="<%= answer.id %>">
+        <input type="submit" value="+">
+        <%= question.text.html_safe %>
+      </form>
+    </li>
   <% end %>
 </ul>

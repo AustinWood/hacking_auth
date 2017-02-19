@@ -29,4 +29,19 @@ class Answer < ActiveRecord::Base
       end
     end
   end
+
+  def parent
+    question = Question.find_by(id: self.question_id)
+    Answer.find_by(question_id: question.parent)
+  end
+
+  def clicked
+    self.is_open = !self.is_open
+    self.did_open = true
+    self.save
+  end
+
+  def self.print_shit
+
+  end
 end

@@ -33,4 +33,9 @@ class Question < ActiveRecord::Base
     end
     i
   end
+
+  def is_open?
+    answer = Answer.find_by(question_id: self.id, attempt_id: 1)
+    answer.is_open
+  end
 end

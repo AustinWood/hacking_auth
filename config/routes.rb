@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   resources :exams, only: [:index, :show, :new, :create, :destroy]
 
-  resources :attempts, only: [:index, :show, :new, :create, :destroy]
+  resources :attempts, only: [:index, :show, :new, :create, :destroy, :update]
 
   root to: 'users#new'
 end
