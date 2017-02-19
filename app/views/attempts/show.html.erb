@@ -5,6 +5,6 @@
 <ul>
   <% answers.each do |answer| %>
     <% question = Question.find(answer.question_id) %>
-    <li><%= question.text %></li>
+    <li><%= question.text.html_safe %></li>
   <% end %>
 </ul>

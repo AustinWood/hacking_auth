@@ -11,9 +11,11 @@ AUTH^             Do Auth. Just do it.^ NULL
         INDEX_C^  # in user migration<br />add_index :users, :session_token: unique: true^ INDEX
     SESH^         Implement session tokens^ MODEL
       GEN^        Generate session token^ SESH
-        GEN_C^    # in user model<br />def generate_session_token; SecureRandom::urlsafe_base64(16)^ GEN
+        GEN_C^    # in user model<br />def self.generate_session_token; SecureRandom::urlsafe_base64(16); end^ GEN
       ENSURE^     Ensure session token^ SESH
+        ENSURE_C^ # in user model<br /># and don\'t forget to call this after initialize<br />def ensure_session_token<br />&nbsp;&nbsp;self.session_token ||= User.generate_session_token<br />end^ ENSURE
       RESET^      Reset session token^ SESH
+        RESET_C^  # in user model<br />def reset_session_token!<br />&nbsp;&nbsp;self.session_token = User.generate_session_token<br />&nbsp;&nbsp;self.save<br />&nbsp;&nbsp;self.session_token<br />end^ RESET
     VALID^        Validate proper attributes^ MODEL
     PASS^         Implement passwords^ MODEL
       FIND^       Find the user based on credentials^ PASS
