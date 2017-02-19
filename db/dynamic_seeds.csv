@@ -10,17 +10,28 @@ tag:AUTH,     text:Do Auth. Just do it., parent:NULL
       tag:ENSURE,   text:Ensure session token, parent:SESH
       tag:RESET,    text:Reset session token, parent:SESH
     tag:VALID,    text:Validate proper attributes, parent:MODEL
-
     tag:PASS,     text:Implement passwords, parent:MODEL
       tag:FIND,     text:Find the user based on credentials, parent:PASS
       tag:SETP,     text:Set the password on the user, parent:PASS
       tag:USER?,    text:Check the password is correct, parent:PASS
   tag:CONT,     text:Make the controllers, parent:AUTH
     tag:BASIC,    text:Create controllers and helpers, parent:CONT
+      tag:HELP,     text:Add helpers, parent:BASIC
+      tag:MCONT,    text:Create proper controllers, parent:BASIC
     tag:SIGNUP,   text:Add sign up functionality, parent:CONT
+      tag:UPNEW,    text:Add new method in user controller, parent:SIGNUP
+      tag:UPCREATE, text:Add create method in user controller, parent:SIGNUP
+      tag:UPIN,     text:Sign in user on creation, parent:SIGNUP
     tag:LOGIN,    text:Add log in functionality, parent:CONT
+      tag:IN,       text:Sign in user, parent:LOGIN
+      tag:INNEW,    text:Add new method to session, parent:LOGIN
+      tag:INCREATE, text:Add create method to session, parent:LOGIN
     tag:SIGNOUT,  text:Add sign out functionality, parent:CONT
+      tag:OUT, text:Sign out user, parent:SIGNOUT
+      tag:DESTROY, text:Destroy user session, parent:SIGNOUT
   tag:VIEW,     text:Make the views, parent:AUTH
     tag:LINK,     text:Add links for login/signin/signout, parent:VIEW
     tag:FORM,     text:Add generic form for signup/login, parent:VIEW
+      tag:AUTHTOK,  text:Generate form authentication token, parent:FORM
+      tag:URL,      text:Ensure the form points to the correct url, parent:FORM
     tag:ERROR,    text:Add error feedback, parent:VIEW
