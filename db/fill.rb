@@ -1,19 +1,19 @@
 require 'csv'
 require 'byebug'
 
-raw_questions = CSV.read("dynamic_seeds.csv")
-
-raw_questions.map! do |question|
-  question.map { |el| el.strip.split(':') }
-end
+raw_questions = CSV.read("dynamic_seeds.csv", {col_sep: "^"})
+#
+# raw_questions.map! do |question|
+#   question.map { |el| el.strip.split(':') }
+# end
 
 id_hash = {}
-raw_questions.each_with_index { |question, i| id_hash[question[0][1]] = i + 1 }
+raw_questions.each_with_index { |question, i| id_hash[question[0]] = i + 1 }
 
 questions = []
 raw_questions.each do |question|
-  text = question[1][1]
-  parent_id = id_hash[question[2][1]]
+  text = question[1].strip
+  parent_id = id_hash[question[2]]
   if parent_id.nil?
     string = "Question.create!(text: '#{text}', parent_id: nil)"
   else

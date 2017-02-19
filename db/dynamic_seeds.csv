@@ -1,37 +1,42 @@
-tag:AUTH,     text:Do Auth. Just do it., parent:NULL
-  tag:MODEL,    text:Make the models, parent:AUTH
-    tag:MIG,      text:Implement user migration, parent:MODEL
-      tag:NAME,     text:Add username, parent:MIG
-      tag:DIG,      text:Add password digest, parent:MIG
-      tag:TOK,      text:Add session token, parent:MIG
-      tag:INDEX,    text:Add indexes for session token, parent:MIG
-    tag:SESH,     text:Implement session tokens, parent:MODEL
-      tag:GEN,      text:Generate session token, parent:SESH
-      tag:ENSURE,   text:Ensure session token, parent:SESH
-      tag:RESET,    text:Reset session token, parent:SESH
-    tag:VALID,    text:Validate proper attributes, parent:MODEL
-    tag:PASS,     text:Implement passwords, parent:MODEL
-      tag:FIND,     text:Find the user based on credentials, parent:PASS
-      tag:SETP,     text:Set the password on the user, parent:PASS
-      tag:USER?,    text:Check the password is correct, parent:PASS
-  tag:CONT,     text:Make the controllers, parent:AUTH
-    tag:BASIC,    text:Create controllers and helpers, parent:CONT
-      tag:HELP,     text:Add helpers, parent:BASIC
-      tag:MCONT,    text:Create proper controllers, parent:BASIC
-    tag:SIGNUP,   text:Add sign up functionality, parent:CONT
-      tag:UPNEW,    text:Add new method in user controller, parent:SIGNUP
-      tag:UPCREATE, text:Add create method in user controller, parent:SIGNUP
-      tag:UPIN,     text:Sign in user on creation, parent:SIGNUP
-    tag:LOGIN,    text:Add log in functionality, parent:CONT
-      tag:IN,       text:Sign in user, parent:LOGIN
-      tag:INNEW,    text:Add new method to session, parent:LOGIN
-      tag:INCREATE, text:Add create method to session, parent:LOGIN
-    tag:SIGNOUT,  text:Add sign out functionality, parent:CONT
-      tag:OUT, text:Sign out user, parent:SIGNOUT
-      tag:DESTROY, text:Destroy user session, parent:SIGNOUT
-  tag:VIEW,     text:Make the views, parent:AUTH
-    tag:LINK,     text:Add links for login/signin/signout, parent:VIEW
-    tag:FORM,     text:Add generic form for signup/login, parent:VIEW
-      tag:AUTHTOK,  text:Generate form authentication token, parent:FORM
-      tag:URL,      text:Ensure the form points to the correct url, parent:FORM
-    tag:ERROR,    text:Add error feedback, parent:VIEW
+AUTH^             Do Auth. Just do it.^ NULL
+  MODEL^          Make the models^ AUTH
+    MIG^          Implement user migration^ MODEL
+      NAME^       Add username^ MIG
+        NAME_C^   # in user migration<br />t.string :username, null: false^ NAME
+      DIG^        Add password digest^ MIG
+        DIG_C^    # in user migration<br />t.string :password_digest, null: false^ DIG
+      TOK^        Add session token^ MIG
+        TOK_C^    # in user migration<br />t.string :session_token, null: false^ TOK
+      INDEX^      Add indexes for session token^ MIG
+        INDEX_C^  # in user migration<br />add_index :users, :session_token: unique: true^ INDEX
+    SESH^         Implement session tokens^ MODEL
+      GEN^        Generate session token^ SESH
+        GEN_C^    # in user model<br />def generate_session_token; SecureRandom::urlsafe_base64(16)^ GEN
+      ENSURE^     Ensure session token^ SESH
+      RESET^      Reset session token^ SESH
+    VALID^        Validate proper attributes^ MODEL
+    PASS^         Implement passwords^ MODEL
+      FIND^       Find the user based on credentials^ PASS
+      SETP^       Set the password on the user^ PASS
+      USER?^      Check the password is correct^ PASS
+  CONT^           Make the controllers^ AUTH
+    BASIC^        Create controllers and helpers^ CONT
+      HELP^       Add helpers^ BASIC
+      MCONT^      Create proper controllers^ BASIC
+    SIGNUP^       Add sign up functionality^ CONT
+      UPNEW^      Add new method in user controller^ SIGNUP
+      UPCREATE^   Add create method in user controller^ SIGNUP
+      UPIN^       Sign in user on creation^ SIGNUP
+    LOGIN^        Add log in functionality^ CONT
+      IN^         Sign in user^ LOGIN
+      INNEW^      Add new method to session^ LOGIN
+      INCREATE^   Add create method to session^ LOGIN
+    SIGNOUT^      Add sign out functionality^ CONT
+      OUT^        Sign out user^ SIGNOUT
+      DESTROY^    Destroy user session^ SIGNOUT
+  VIEW^           Make the views^ AUTH
+    LINK^         Add links for login/signin/signout^ VIEW
+    FORM^         Add generic form for signup/login^ VIEW
+      AUTHTOK^    Generate form authentication token^ FORM
+      URL^        Ensure the form points to the correct url^ FORM
+    ERROR^        Add error feedback^ VIEW
