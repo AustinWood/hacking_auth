@@ -1,7 +1,7 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+Question.create!(text: 'Do Auth. Just do it.', parent_id: NULL)
+Question.create!(text: 'Make the models', parent_id: '1')
+Question.create!(text: 'Make the controllers', parent_id: '1')
+Question.create!(text: 'Make the views', parent_id: '1')
+Question.create!(text: 'Implement session tokens', parent_id: '2')
+Question.create!(text: 'Validate proper attributes', parent_id: '2')
+Question.create!(text: 'Implement passwords', parent_id: '2')

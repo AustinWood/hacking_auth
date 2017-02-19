@@ -4,3 +4,4 @@ tag:CONT, text:Make the controllers, parent:AUTH
 tag:VIEW, text:Make the views, parent:AUTH
 tag:SESH, text:Implement session tokens, parent:MODEL
 tag:VALID, text:Validate proper attributes, parent:MODEL
+tag:PASS, text:Implement passwords, parent:MODEL

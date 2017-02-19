@@ -22,8 +22,10 @@ raw_questions.each do |question|
   questions << string
 end
 
-questions.each do |question|
-  open('seeds.rb', 'w') do |f|
+
+
+open('seeds.rb', 'w') do |f|
+  questions.each do |question|
     f.puts question
   end
 end
