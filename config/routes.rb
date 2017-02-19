@@ -3,5 +3,7 @@ Rails.application.routes.draw do
 
   resource :session, only: [:new, :create, :destroy]
 
+  resources :exams, only: [:index, :show, :new, :create, :destroy]
+
   root to: 'users#new'
 end
