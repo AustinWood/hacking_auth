@@ -1,0 +1,10 @@
+<h1>Attempts > Show</h1>
+
+<% answers = Attempt.last.answers %>
+
+<ul>
+  <% answers.each do |answer| %>
+    <% question = Question.find(answer.question_id) %>
+    <li><%= question.text %></li>
+  <% end %>
+</ul>
