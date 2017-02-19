@@ -14,4 +14,7 @@ class Attempt < ActiveRecord::Base
   belongs_to :user
   has_many :answers
 
+  def create_answers
+    
+  end
 end

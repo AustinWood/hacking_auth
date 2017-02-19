@@ -16,4 +16,16 @@ class Exam < ActiveRecord::Base
 
   belongs_to :owner, class_name: :User
   belongs_to :root_question, class_name: :Question
+
+  def questions
+    child_questions(root_question)
+  end
+
+  def child_questions(root_node)
+    questions = [root_node]
+    root_node.children.each do |child|
+      questions.concat(child_questions(child))
+    end
+    questions
+  end
 end
