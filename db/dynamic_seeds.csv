@@ -1,7 +1,26 @@
-tag:AUTH, text:Do Auth. Just do it., parent:NULL
-tag:MODEL, text:Make the models, parent:AUTH
-tag:CONT, text:Make the controllers, parent:AUTH
-tag:VIEW, text:Make the views, parent:AUTH
-tag:SESH, text:Implement session tokens, parent:MODEL
-tag:VALID, text:Validate proper attributes, parent:MODEL
-tag:PASS, text:Implement passwords, parent:MODEL
+tag:AUTH,     text:Do Auth. Just do it., parent:NULL
+  tag:MODEL,    text:Make the models, parent:AUTH
+    tag:MIG,      text:Implement user migration, parent:MODEL
+      tag:NAME,     text:Add username, parent:MIG
+      tag:DIG,      text:Add password digest, parent:MIG
+      tag:TOK,      text:Add session token, parent:MIG
+      tag:INDEX,    text:Add indexes for session token, parent:MIG
+    tag:SESH,     text:Implement session tokens, parent:MODEL
+      tag:GEN,      text:Generate session token, parent:SESH
+      tag:ENSURE,   text:Ensure session token, parent:SESH
+      tag:RESET,    text:Reset session token, parent:SESH
+    tag:VALID,    text:Validate proper attributes, parent:MODEL
+
+    tag:PASS,     text:Implement passwords, parent:MODEL
+      tag:FIND,     text:Find the user based on credentials, parent:PASS
+      tag:SETP,     text:Set the password on the user, parent:PASS
+      tag:USER?,    text:Check the password is correct, parent:PASS
+  tag:CONT,     text:Make the controllers, parent:AUTH
+    tag:BASIC,    text:Create controllers and helpers, parent:CONT
+    tag:SIGNUP,   text:Add sign up functionality, parent:CONT
+    tag:LOGIN,    text:Add log in functionality, parent:CONT
+    tag:SIGNOUT,  text:Add sign out functionality, parent:CONT
+  tag:VIEW,     text:Make the views, parent:AUTH
+    tag:LINK,     text:Add links for login/signin/signout, parent:VIEW
+    tag:FORM,     text:Add generic form for signup/login, parent:VIEW
+    tag:ERROR,    text:Add error feedback, parent:VIEW
