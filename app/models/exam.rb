@@ -28,4 +28,10 @@ class Exam < ActiveRecord::Base
     end
     questions
   end
+
+  def new_attempt(user)
+    attempt = Attempt.create(user: user)
+    Answer.populate(self, attempt)
+    attempt
+  end
 end
