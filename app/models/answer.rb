@@ -17,16 +17,13 @@ class Answer < ActiveRecord::Base
   belongs_to :attempt
 
   def self.populate(exam, attempt)
-    puts "hit populate ***"
     exam.questions.each do |question|
-      puts question.text
-      answer = Answer.new(question_id: question.id, attempt_id: attempt.id, is_open: false, did_open: false)
-      if answer.valid?
-        puts "VALID"
-        answer.save
-      else
-        puts "NOT VALID"
-      end
+      Answer.create(
+        question_id: question.id,
+        attempt_id: attempt.id,
+        is_open: false,
+        did_open: false
+      )
     end
   end
 
