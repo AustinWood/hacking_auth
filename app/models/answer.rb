@@ -12,7 +12,21 @@
 #
 
 class Answer < ActiveRecord::Base
-  validates :question_id, :attempt_id, :is_open, :did_open, presence: true
+  validates :question_id, :attempt_id, presence: true
   belongs_to :question
   belongs_to :attempt
+
+  def self.populate(exam, attempt)
+    puts "hit populate ***"
+    exam.questions.each do |question|
+      puts question.text
+      answer = Answer.new(question_id: question.id, attempt_id: attempt.id, is_open: false, did_open: false)
+      if answer.valid?
+        puts "VALID"
+        answer.save
+      else
+        puts "NOT VALID"
+      end
+    end
+  end
 end

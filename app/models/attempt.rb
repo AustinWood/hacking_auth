@@ -14,4 +14,11 @@ class Attempt < ActiveRecord::Base
   belongs_to :user
   has_many :answers
 
+  def self.new_attempt(user)
+    Attempt.create(user_id: user.id)
+  end
+
+  def answers
+    Answer.where("attempt_id = #{self.id}")
+  end
 end

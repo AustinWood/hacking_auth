@@ -1,4 +1,4 @@
-class ExamsController < ApplicationController
+class AttemptsController < ApplicationController
   def index
     render :index
   end
