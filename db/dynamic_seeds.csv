@@ -1,7 +1,0 @@
-tag:AUTH, text:Do Auth. Just do it., parent:NULL
-tag:MODEL, text:Make the models, parent:AUTH
-tag:CONT, text:Make the controllers, parent:AUTH
-tag:VIEW, text:Make the views, parent:AUTH
-tag:SESH, text:Implement session tokens, parent:MODEL
-tag:VALID, text:Validate proper attributes, parent:MODEL
-tag:PASS, text:Implement passwords, parent:MODEL
