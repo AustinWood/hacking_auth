@@ -6,7 +6,8 @@
 <ul style="list-style-type:none">
   <% questions.each do |question| %>
     <% next unless question.parent_id.nil? || question.ancestors_open? %>
-    <% margin = question.indentation * 24 %>
+    <% indentation = (question.is_leaf_node? ? question.indentation + 1 : question.indentation) %>
+    <% margin = indentation * 24 %>
     <li align="left" style="text-align: left; margin-left: <%= margin %>px;">
       <form action="attempt_url" method="post">
         <input type="hidden" name="_method" value="patch">
