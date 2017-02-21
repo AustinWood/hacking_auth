@@ -9,9 +9,14 @@ class AttemptsController < ApplicationController
   end
 
   def update
-    Answer.find_by(params[:answer_id]).clicked
-    
-    render :show
+    # fail
+    q = Question.find_by(id: params[:attempt][:question_id].to_i)
+    new_bool = !q.is_open
+    if q.update_attributes(is_open: new_bool)
+      redirect_to attempt_url(1)
+    else
+      fail
+    end
   end
 
   def attempt_params

@@ -1,16 +1,16 @@
 <h1>Attempts > Show</h1>
 
 <% questions = Exam.first.questions %>
+<% questions.sort! { |a,b| a.id <=> b.id } %>
 
 <ul style="list-style-type:none">
   <% questions.each do |question| %>
-    <% next unless question.parent.nil? || question.parent.is_open? %>
+    <% next unless question.parent_id.nil? || question.ancestors_open? %>
     <% margin = question.indentation * 24 %>
-    <% answer = Answer.find_by(question_id: question.id, attempt_id: 1) %>
     <li align="left" style="text-align: left; margin-left: <%= margin %>px;">
       <form action="attempt_url" method="post">
         <input type="hidden" name="_method" value="patch">
-        <input type="hidden" name="attempt[answer_id]" value="<%= answer.id %>">
+        <input type="hidden" name="attempt[question_id]" value="<%= question.id %>">
         <input type="submit" value="+">
         <%= question.text.html_safe %>
       </form>

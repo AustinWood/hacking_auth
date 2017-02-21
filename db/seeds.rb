@@ -1,3 +1,5 @@
+User.create!(username: 'austin', password: 'password')
+Exam.create!(title: 'Hacking Auth', owner_id: 1, root_question_id: 1)
 Question.create!(text: 'Do Auth. Just do it.', parent_id: nil)
 Question.create!(text: 'Make the models', parent_id: '1')
 Question.create!(text: 'Implement user migration', parent_id: '2')

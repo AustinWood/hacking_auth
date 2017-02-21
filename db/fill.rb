@@ -23,6 +23,8 @@ raw_questions.each do |question|
 end
 
 open('seeds.rb', 'w') do |f|
+  f.puts "User.create!(username: 'austin', password: 'password')"
+  f.puts "Exam.create!(title: 'Hacking Auth', owner_id: 1, root_question_id: 1)"
   questions.each do |question|
     f.puts question
   end
