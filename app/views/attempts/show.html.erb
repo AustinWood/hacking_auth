@@ -12,10 +12,12 @@
       <form action="attempt_url" method="post">
         <input type="hidden" name="_method" value="patch">
         <input type="hidden" name="attempt[question_id]" value="<%= question.id %>">
-        <% unless question.is_leaf_node? %>
+        <% if question.is_leaf_node? %>
+          <code><%= question.text.html_safe %></code>
+        <% else %>
           <input type="submit" value="<%= question.is_open? ? "-" : "+" %>">
+          <%= question.text.html_safe %>
         <% end %>
-        <%= question.text.html_safe %>
       </form>
     </li>
   <% end %>
