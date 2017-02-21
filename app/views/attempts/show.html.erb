@@ -1,4 +1,4 @@
-<h1>Attempts > Show</h1>
+<h1>Rails Auth Pattern</h1>
 
 <% questions = Exam.first.questions %>
 <% questions.sort! { |a,b| a.id <=> b.id } %>
@@ -6,14 +6,14 @@
 <ul style="list-style-type:none">
   <% questions.each do |question| %>
     <% next unless question.parent_id.nil? || question.ancestors_open? %>
-    <% indentation = (question.is_leaf_node? ? question.indentation + 1 : question.indentation) %>
+    <% indentation = (question.is_code? ? question.indentation + 1 : question.indentation) %>
     <% margin = indentation * 24 %>
     <li align="left" style="text-align: left; margin-left: <%= margin %>px;">
       <form action="attempt_url" method="post">
         <input type="hidden" name="_method" value="patch">
         <input type="hidden" name="attempt[question_id]" value="<%= question.id %>">
-        <% if question.is_leaf_node? %>
-          <code><%= question.text.html_safe %></code>
+        <% if question.is_code? %>
+          <code><%= (question.text[1..-1]).html_safe %></code>
         <% else %>
           <input type="submit" value="<%= question.is_open? ? "-" : "+" %>">
           <%= question.text.html_safe %>

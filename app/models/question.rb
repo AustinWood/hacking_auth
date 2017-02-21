@@ -66,6 +66,10 @@ class Question < ActiveRecord::Base
     self.children.empty?
   end
 
+  def is_code?
+    self.text[0] == "`"
+  end
+
   # def clicked
   #   # if self.is_open
   #   #   self.is_open = false

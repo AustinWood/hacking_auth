@@ -1,6 +1,6 @@
 To update the database:
 * rake db:drop db:create db:migrate
-* ruby db/fill.rb
+* cd db; ruby fill.rb; cd ..
 * rake db:seed
 
 TODO:
