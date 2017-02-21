@@ -12,7 +12,7 @@
         <input type="hidden" name="_method" value="patch">
         <input type="hidden" name="attempt[question_id]" value="<%= question.id %>">
         <% unless question.is_leaf_node? %>
-          <input type="submit" value="+">
+          <input type="submit" value="<%= question.is_open? ? "-" : "+" %>">
         <% end %>
         <%= question.text.html_safe %>
       </form>
