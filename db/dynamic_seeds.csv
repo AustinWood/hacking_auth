@@ -1,44 +1,117 @@
-AUTH^             Do Auth. Just do it.^ NULL
-  MODEL^          Make the models^ AUTH
-    MIG^          Implement user migration^ MODEL
-      NAME^       Add username^ MIG
-        NAME_C^   # in user migration<br />t.string :username, null: false^ NAME
-      DIG^        Add password digest^ MIG
-        DIG_C^    # in user migration<br />t.string :password_digest, null: false^ DIG
-      TOK^        Add session token^ MIG
-        TOK_C^    # in user migration<br />t.string :session_token, null: false^ TOK
-      INDEX^      Add indexes for session token^ MIG
-        INDEX_C^  # in user migration<br />add_index :users, :session_token: unique: true^ INDEX
-    SESH^         Implement session tokens^ MODEL
-      GEN^        Generate session token^ SESH
-        GEN_C^    # in user model<br />def self.generate_session_token; SecureRandom::urlsafe_base64(16); end^ GEN
-      ENSURE^     Ensure session token^ SESH
-        ENSURE_C^ # in user model<br /># and don\'t forget to call this after initialize<br />def ensure_session_token<br />&nbsp;&nbsp;self.session_token ||= User.generate_session_token<br />end^ ENSURE
-      RESET^      Reset session token^ SESH
-        RESET_C^  # in user model<br />def reset_session_token!<br />&nbsp;&nbsp;self.session_token = User.generate_session_token<br />&nbsp;&nbsp;self.save<br />&nbsp;&nbsp;self.session_token<br />end^ RESET
-    VALID^        Validate proper attributes^ MODEL
-    PASS^         Implement passwords^ MODEL
-      FIND^       Find the user based on credentials^ PASS
-      SETP^       Set the password on the user^ PASS
-      USER?^      Check the password is correct^ PASS
-  CONT^           Make the controllers^ AUTH
-    BASIC^        Create controllers and helpers^ CONT
-      HELP^       Add helpers^ BASIC
-      MCONT^      Create proper controllers^ BASIC
-    SIGNUP^       Add sign up functionality^ CONT
-      UPNEW^      Add new method in user controller^ SIGNUP
-      UPCREATE^   Add create method in user controller^ SIGNUP
-      UPIN^       Sign in user on creation^ SIGNUP
-    LOGIN^        Add log in functionality^ CONT
-      IN^         Sign in user^ LOGIN
-      INNEW^      Add new method to session^ LOGIN
-      INCREATE^   Add create method to session^ LOGIN
-    SIGNOUT^      Add sign out functionality^ CONT
-      OUT^        Sign out user^ SIGNOUT
-      DESTROY^    Destroy user session^ SIGNOUT
-  VIEW^           Make the views^ AUTH
-    LINK^         Add links for login/signin/signout^ VIEW
-    FORM^         Add generic form for signup/login^ VIEW
-      AUTHTOK^    Generate form authentication token^ FORM
-      URL^        Ensure the form points to the correct url^ FORM
-    ERROR^        Add error feedback^ VIEW
+AUTH^NULL^             Do Auth. Just do it.
+  MODEL^AUTH^          Make the models
+    MIG^MODEL^          Implement user migration
+      NAME^MIG^       Add username
+        NAME_C^NAME^  # in user migration
+        NAME_C^NAME^  t.string :username, null: false
+      DIG^MIG^        Add password digest
+        DIG_C^DIG^   # in user migration
+        DIG_C^DIG^   #t.string :password_digest, null: false
+      TOK^MIG^        Add session token
+        TOK_C^TOK^    # in user migration
+        TOK_C^TOK^    t.string :session_token, null: false
+      INDEX^MIG^      Add indexes for session token
+        INDEX_C^INDEX^  # in user migration
+        INDEX_C^INDEX^  add_index :users, :session_token: unique: true
+    SESH^MODEL^         Implement session tokens
+      GEN^SESH^        Generate session token
+        GEN_C^GEN^    # in user model
+        GEN_C^GEN^    def self.generate_session_token
+        GEN_C^GEN^    &nbsp;&nbsp;SecureRandom::urlsafe_base64(16)
+        GEN_C^GEN^    end
+      ENSURE^SESH^     Ensure session token
+        ENSURE_C^ENSURE^ # in user model
+        ENSURE_C^ENSURE^ # and don\'t forget to call this after initialize
+        ENSURE_C^ENSURE^ def ensure_session_token
+        ENSURE_C^ENSURE^ &nbsp;&nbsp;self.session_token ||= User.generate_session_token
+        ENSURE_C^ENSURE^ end
+      RESET^SESH^      Reset session token
+        RESET_C^RESET^  # in user model
+        RESET_C^RESET^  def reset_session_token!
+        RESET_C^RESET^  &nbsp;&nbsp;self.session_token = User.generate_session_token
+        RESET_C^RESET^  &nbsp;&nbsp;self.save
+        RESET_C^RESET^  &nbsp;&nbsp;self.session_token
+        RESET_C^RESET^  end
+    VALID^MODEL^        Validate proper attributes
+      VALID_C^VALID^    # all in user model
+      VALID_C^VALID^    validates :username, :password_digest, :session_token, presence: true
+      VALID_C^VALID^    validates :password, length: { minimum: 6 }, allow_nil: true
+    PASS^MODEL^         Implement passwords
+      SETP^PASS^       Set the password on the user
+        SETP_C^SETP^   # in user model
+        SETP_C^SETP^   def password=(password)
+        SETP_C^SETP^   &nbsp;&nbsp;@password = password
+        SETP_C^SETP^   &nbsp;&nbsp;self.password_digest = BCrypt::Password.create(password)
+        SETP_C^SETP^   end
+      USER?^PASS^      Check the password is correct
+        USER?_C^USER?  # in user model
+        USER?_C^USER?  def is_password?(password)
+        USER?_C^USER?  &nbsp;&nbsp;BCrypt::Password.new(self.password_digest).is_password?(password)
+        USER?_C^USER?  end
+      FIND^PASS^       Find the user based on credentials
+        FIND_C^FIND^   # in user model
+        FIND_C^FIND^   def self.find_by_credentials(username, password)
+        FIND_C^FIND^   &nbsp;&nbsp;user = User.find_by(username: username)
+        FIND_C^FIND^   &nbsp;&nbsp;user && user.is_password?(password) ? user : nil
+        FIND_C^FIND^   end
+  CONT^AUTH^           Make the controllers
+    BASIC^CONT^        Create controllers and helpers
+      HELP^BASIC^       Add helpers
+        HELP_C^HELP^    # in application controller
+        HELP_C^HELP^    helper_method :current_user, :logged_in?
+        HELP_C^HELP^    def current_user
+        HELP_C^HELP^    &nbsp;&nbsp;@current_user ||= User.find(params[:id])
+        HELP_C^HELP^    end
+        HELP_C^HELP^    def logged_in?
+        HELP_C^HELP^    &nbsp;&nbsp;!!current_user
+        HELP_C^HELP^    end
+      MCONT^BASIC^      Create proper controllers
+        MCONT_C^MCONT^  # in bash terminal
+        MCONT_C^MCONT^  $ rails g controller Users
+        MCONT_C^MCONT^  $ rails g controller Sessions
+      ROUTE^BASIC^      Setup routes
+        ROUTE_C^ROUTE^  # in routes.rb
+        ROUTE_C^ROUTE^  resources :users, only [:new, :create, :show]
+        ROUTE_C^ROUTE^  resource :sessions, only [:new, :create, :destroy]
+    SIGNUP^CONT^       Add sign up functionality
+      UPARAM^SIGNUP^        Add filter for user params
+        UPARAM_C^UPARAM^      def user_params
+        UPARAM_C^UPARAM^      &nbsp;&nbsp;params.require(:user).permit(:username, :password)
+        UPARAM_C^UPARAM^      end
+      UPNEW^SIGNUP^      Add new method in user controller
+        UPNEW_C^UPNEW^    def new
+        UPNEW_C^UPNEW^    &nbsp;&nbsp;render :new
+        UPNEW_C^UPNEW^    end
+      UPCREATE^SIGNUP^   Add create method in user controller
+        UPCREATE_C^UPCREATE^  def create
+        UPCREATE_C^UPCREATE^  &nbsp;&nbsp;@user = User.find_by(user_params)
+        UPCREATE_C^UPCREATE^  &nbsp;&nbsp;if user.save
+        UPCREATE_C^UPCREATE^  &nbsp;&nbsp;&nbsp;&nbsp;redirect_to user_url(@user)
+        UPCREATE_C^UPCREATE^  &nbsp;&nbsp;else
+        UPCREATE_C^UPCREATE^  &nbsp;&nbsp;&nbsp;&nbsp;flash[:errors] = @user.errors.full_messages
+        UPCREATE_C^UPCREATE^  &nbsp;&nbsp;&nbsp;&nbsp;redirect_to new_user_url
+        UPCREATE_C^UPCREATE^  &nbsp;&nbsp;end
+        UPCREATE_C^UPCREATE^  end
+      UPIN^SIGNUP^       Sign in user on creation
+        UPIN_C^UPIN^        
+    LOGIN^CONT^        Add log in functionality
+      IN^LOGIN^         Sign in user
+
+      INNEW^LOGIN^      Add new method to session
+
+      INCREATE^LOGIN^   Add create method to session
+
+    SIGNOUT^CONT^      Add sign out functionality
+      OUT^SIGNOUT^        Sign out user
+
+      DESTROY^SIGNOUT^    Destroy user session
+
+  VIEW^AUTH^           Make the views
+    LINK^VIEW^         Add links for login/signin/signout
+
+    FORM^VIEW^         Add generic form for signup/login
+      AUTHTOK^FORM^    Generate form authentication token
+
+      URL^FORM^        Ensure the form points to the correct url
+
+    ERROR^VIEW^        Add error feedback
