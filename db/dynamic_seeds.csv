@@ -93,7 +93,7 @@ AUTH^NULL^             Do Auth. Just do it.
         UPCREATE_C^UPCREATE^  &nbsp;&nbsp;end
         UPCREATE_C^UPCREATE^  end
       UPIN^SIGNUP^       Sign in user on creation
-        UPIN_C^UPIN^        
+        UPIN_C^UPIN^
     LOGIN^CONT^        Add log in functionality
       IN^LOGIN^         Sign in user
 

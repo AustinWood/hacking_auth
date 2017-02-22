@@ -18,5 +18,20 @@
 
 <%= yield %>
 
+<% unless signed_in? %>
+  <br>
+  <p><b>You can play around with the auth tree without logging in.</b></p>
+  <ul>
+    <li>
+    <p>Run the following script on your machine:</p>
+      <li><i>TODO: Write this script!</i></li>
+    </li>
+
+    <li>
+    <p>Then <%= link_to "click here.", attempt_url(1), method: :get %></p>
+    </li>
+  </ul>
+<% end %>
+
 </body>
 </html>
